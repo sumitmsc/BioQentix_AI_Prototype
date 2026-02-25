@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioQentix AI · clinical intelligence platform</title>
+    <!-- Fonts + Icons + Animate.css (lite) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b1020;
+            font-family: 'Inter', sans-serif;
+            color: #eef4ff;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* animated gradient background */
+        .bg-aura {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(44, 82, 240, 0.12) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(148, 87, 235, 0.1) 0%, transparent 45%),
+                        repeating-linear-gradient(45deg, #0a0f1f 0px, #0a0f1f 2px, #10172e 2px, #10172e 8px);
+            z-index: -1;
+            pointer-events: none;
+            animation: slowDrift 30s infinite alternate;
+        }
+
+        @keyframes slowDrift {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+            100% { transform: scale(1.02) rotate(0.3deg); opacity: 1; }
+        }
+
+        .wrapper {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* header + nav */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 20, 45, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 80px;
+            padding: 0.6rem 1.8rem;
+            border: 1px solid #2c4070;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #3960f0, #9b4dff);
+            width: 44px; height: 44px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            box-shadow: 0 8px 20px #3960f0aa;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(to right, #fff, #b8cbff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pill-tag {
+            background: #14274e;
+            padding: 0.4rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid #3f5cb0;
+            font-size: 0.95rem;
+            color: #b8d0ff;
+        }
+
+        /* sticky nav */
+        .sticky-nav {
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            background: #1a254a;
+            border: 1px solid #324c97;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: #2f3f7a;
+            border-color: #6b8aff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 18px -10px #141f4b;
+        }
+
+        .nav-btn i { color: #7f9fff; }
+
+        /* section styles */
+        .section-card {
+            background: rgba(12, 22, 45, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            padding: 2.2rem 2.2rem;
+            margin-bottom: 2.8rem;
+            border: 1px solid #2c3f74;
+            box-shadow: 0 25px 35px -20px #010314;
+            transition: 0.2s;
+            scroll-margin-top: 70px;
+        }
+
+        .section-title {
+            font-size: 2.1rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            background: #263b70;
+            padding: 14px;
+            border-radius: 50%;
+            color: #aac3ff;
+        }
+
+        h3 {
+            color: #b5ceff;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .grid-2, .grid-3, .grid-4 {
+            display: grid;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); }
+
+        .info-card {
+            background: #13203f;
+            border-radius: 28px;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid #33477d;
+            transition: all 0.2s;
+        }
+
+        .info-card:hover {
+            border-color: #6b8aff;
+            background: #1c2c58;
+            transform: scale(1.01);
+        }
+
+        .info-card i {
+            font-size: 2.2rem;
+            background: #253761;
+            padding: 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .badge {
+            background: #1e2d55;
+            border-radius: 40px;
+            padding: 5px 15px;
+            font-size: 0.85rem;
+            border: 1px solid #4d6ad2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #0f1a35;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        th { background: #1e2f62; padding: 12px; text-align: left; }
+        td { padding: 10px 12px; border-bottom: 1px solid #2c3f70; }
+
+        .pipeline {
+            display: flex;
+            flex-wrap: wrap;
+            background: #0e1a38;
+            border-radius: 60px;
+            padding: 1.5rem;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .pipe-node {
+            background: #182759;
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: 1px solid #4d70dd;
+        }
+
+        .tmcp-flow {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: #0a133a;
+            border-radius: 80px;
+            padding: 1.8rem;
+            margin: 20px 0;
+        }
+
+        .tmcp-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tmcp-circle {
+            width: 70px; height: 70px;
+            background: #1e2e62;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border: 2px solid #5f7cf0;
+            box-shadow: 0 0 20px #3e5fd9;
+        }
+
+        /* bioqentix specific branding */
+        .bio-badge {
+            background: linear-gradient(145deg, #2c3f8b, #1f2c62);
+            border-radius: 30px;
+            padding: 1rem 2rem;
+            display: inline-block;
+            font-weight: 700;
+            border: 1px solid #7690ff;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #253668;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            color: #93acff;
+        }
+
+        /* animations */
+        .fadein { animation: fadeIn 0.8s; }
+        @keyframes fadeIn { 0%{opacity:0; transform:translateY(20px);} 100%{opacity:1;} }
+    </style>
+</head>
+<body>
+<div class="bg-aura"></div>
+<div class="wrapper">
+
+    <!-- Header with BioQentix info -->
+    <div class="navbar fadein">
+        <div class="logo">
+            <div class="logo-icon">
+    <img src="file:///C:/Users/drdps/Downloads/Upgrade_Prototype/images/BioQentix_logo.webp" alt="BioQentix AI Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 25px;">
+</div>
+            <span class="logo-text">BioQentix AI</span>
+        </div>
+        <div class="pill-tag"><i class="fas fa-map-pin"></i> Maharashtra, INDIA · Oct 2025</div>
+    </div>
+
+    <!-- sticky navigation (merged) -->
+    <div class="sticky-nav">
+        <button class="nav-btn" onclick="scrollToId('overview')"><i class="fas fa-home"></i> Overview</button>
+        <button class="nav-btn" onclick="scrollToId('arch')"><i class="fas fa-cubes"></i> Architecture</button>
+        <button class="nav-btn" onclick="scrollToId('fih')"><i class="fas fa-flask"></i> FIH</button>
+        <button class="nav-btn" onclick="scrollToId('phase1')">Phase 1</button>
+        <button class="nav-btn" onclick="scrollToId('phase2')">Phase 2</button>
+        <button class="nav-btn" onclick="scrollToId('phase3')">Phase 3</button>
+        <button class="nav-btn" onclick="scrollToId('phase4')">Phase 4/RWE</button>
+        <button class="nav-btn" onclick="scrollToId('omics')"><i class="fas fa-dna"></i> Omics</button>
+        <button class="nav-btn" onclick="scrollToId('tmcp')">TMCP</button>
+        <button class="nav-btn" onclick="scrollToId('pv')"><i class="fas fa-shield"></i> PV</button>
+        <button class="nav-btn" onclick="scrollToId('reg')"><i class="fas fa-file-contract"></i> Regulatory</button>
+        <button class="nav-btn" onclick="scrollToId('kpi')">KPIs</button>
+    </div>
+
+    <!-- OVERVIEW (merged with BioQentix message) -->
+    <section id="overview" class="section-card fadein">
+        <div class="section-title"><i class="fas fa-eye"></i> Platform Overview · BioQentix AI</div>
+        <div style="display:flex; flex-wrap:wrap; gap:30px;">
+            <div style="flex:2; min-width:280px;">
+                <p style="font-size:1.3rem;">End‑to‑end AI clinical research & development: <strong class="bio-badge">FIH → Phase 4 · TMCP · multi‑omics · PV · FDA/ICH</strong></p>
+                <p style="margin-top:20px;">Incorporated <strong>October 2025</strong> in Maharashtra, <strong>BioQentix AI Private Limited</strong> combines generative AI, quantum modeling, and predictive analytics to design novel molecules. Our <i class="fas fa-bolt"></i> <strong>Integrated Multi-AI Engine (CRISPR-QUANT-GPT)</strong> performs virtual drug discovery & repurposing, cutting failure rates from 90% → 10% and timeline 10→2 years. Eco‑friendly, augmenting human scientists.</p>
+                <div class="badge-list" style="margin-top:20px;">
+                    <span class="badge">4,000+ targets</span>
+                    <span class="badge">Dharam Prakash Srivastava (dir)</span>
+                    <span class="badge">Sarvesh Goel (dir)</span>
+                    <span class="badge">virtual R&D · F6S</span>
+                </div>
+            </div>
+            <div style="flex:1; background:#0f1b40; border-radius:40px; padding:20px;">
+                <h3> <i class="fas fa-database"></i> core data sources</h3>
+                <ul style="list-style:none;">
+                    <li><i class="fas fa-check-circle" style="color:#6f9aff;"></i> Preclinical PK/PD</li>
+                    <li><i class="fas fa-check-circle"></i> SDTM / ADaM</li>
+                    <li><i class="fas fa-check-circle"></i> EHR, claims, wearables</li>
+                    <li><i class="fas fa-check-circle"></i> VCF, proteomics, metabolomics</li>
+                    <li><i class="fas fa-check-circle"></i> FAERS / EudraVigilance</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHITECTURE (microservices) -->
+    <section id="arch" class="section-card">
+        <div class="section-title"><i class="fas fa-sitemap"></i> System architecture · microservices</div>
+        <div class="grid-3">
+            <div class="info-card"><i class="fas fa-cloud-upload-alt"></i><h3>Ingestion</h3>EDC, eCRF, omics pipelines, safety feeds → ETL (SDTM → ADaM)</div>
+            <div class="info-card"><i class="fas fa-microchip"></i><h3>AI model layer</h3>Dose AI, biomarker AI, safety AI, TMCP GNN</div>
+            <div class="info-card"><i class="fas fa-chart-pie"></i><h3>Application</h3>CTMS, dashboards, regulatory generator</div>
+        </div>
+        <table>
+            <tr><th>Service</th><th>example endpoints</th></tr>
+            <tr><td>FIH dose</td><td>/dose/fih · /dose/escalation</td></tr>
+            <tr><td>PK/PD</td><td>/pk/upload · /exposure-response</td></tr>
+            <tr><td>Omics</td><td>/omics/genomics/upload · /biomarker/discovery</td></tr>
+            <tr><td>TMCP</td><td>/tmcp/pathway · /tmcp/patient-subgroup</td></tr>
+            <tr><td>Safety PV</td><td>/signal/detection · /risk-score</td></tr>
+            <tr><td>Regulatory</td><td>/doc/protocol · /doc/ectd</td></tr>
+        </table>
+        <p style="margin-top:10px;"><i class="fas fa-database"></i> Storage: PostgreSQL · Neo4j (TMCP graph) · S3 object store · Kubernetes ready</p>
+    </section>
+
+    <!-- FIH dose (merged) -->
+    <section id="fih" class="section-card">
+        <div class="section-title"><i class="fas fa-syringe"></i> FIH dose & PK/PD</div>
+        <div class="grid-2">
+            <div><h3>⚙️ inputs</h3>NOAEL, MABEL, IC50/EC50, allometric scaling, target occupancy, safety factor</div>
+            <div><h3>🧠 AI models</h3>HED calculator, MABEL estimator, BLRM Bayesian escalation, PBPK simulator</div>
+        </div>
+        <div id="fihModels" class="grid-4" style="margin-top:0;"></div>
+        <div><h3>📈 outputs</h3>starting dose, escalation path, DLT probability curve, predicted human PK, safety margin</div>
+    </section>
+
+    <!-- PHASE 1 -->
+    <section id="phase1" class="section-card">
+        <div class="section-title"><i class="fas fa-flask"></i> Phase 1 – safety & dose escalation</div>
+        <p>SAD, MAD, food effect, DDI · MTD, PK/PD, real‑time AE monitoring</p>
+        <div id="phase1Models" class="grid-4"></div>
+    </section>
+
+    <!-- PHASE 2 -->
+    <section id="phase2" class="section-card">
+        <div class="section-title"><i class="fas fa-chart-line"></i> Phase 2 – efficacy & dose optimization</div>
+        <p>Proof of concept, dose ranging, responder prediction, biomarker‑response</p>
+        <div id="phase2Models" class="grid-4"></div>
+    </section>
+
+    <!-- PHASE 3 -->
+    <section id="phase3" class="section-card">
+        <div class="section-title"><i class="fas fa-check-double"></i> Phase 3 – confirmatory</div>
+        <p>superiority/non‑inferiority · site selection AI · interim analysis · survival DeepSurv</p>
+        <div id="phase3Models" class="grid-4"></div>
+    </section>
+
+    <!-- PHASE 4 / RWE -->
+    <section id="phase4" class="section-card">
+        <div class="section-title"><i class="fas fa-hospital-user"></i> Phase 4 & real‑world evidence</div>
+        <div class="grid-3">
+            <div class="info-card">EHR / claims ingestion</div>
+            <div class="info-card">wearable biosensor streaming</div>
+            <div class="info-card">rare AE detection, label expansion</div>
+        </div>
+    </section>
+
+    <!-- OMICS & biomarkers -->
+    <section id="omics" class="section-card">
+        <div class="section-title"><i class="fas fa-microscope"></i> Omics integration · biomarkers</div>
+        <div class="grid-3">
+            <div class="info-card"><i class="fas fa-dna"></i> pharmacogenomics: SNP, CYP450, HLA, metabolizer status</div>
+            <div class="info-card"><i class="fas fa-protein"></i> proteomics: expression signatures, target engagement</div>
+            <div class="info-card"><i class="fas fa-leaf"></i> metabolomics: pathway shifts, toxicity markers</div>
+        </div>
+        <div id="omicsModels" class="grid-4"></div>
+        <p>multi‑omics autoencoder · biomarker discovery (predictive, prognostic, PD)</p>
+    </section>
+
+    <!-- TMCP graph -->
+    <section id="tmcp" class="section-card">
+        <div class="section-title"><i class="fas fa-project-diagram"></i> TMCP intelligence (target → patient)</div>
+        <div class="tmcp-flow">
+            <div class="tmcp-step"><span class="tmcp-circle">T</span><span style="margin-top:8px;">target biology</span></div>
+            <div style="font-size:2rem; align-self:center; color:#6f8eff;"><i class="fas fa-long-arrow-alt-right"></i></div>
+            <div class="tmcp-step"><span class="tmcp-circle">M</span><span>mechanism</span></div>
+            <div style="font-size:2rem; color:#6f8eff;"><i class="fas fa-long-arrow-alt-right"></i></div>
+            <div class="tmcp-step"><span class="tmcp-circle">C</span><span>clinical phenotype</span></div>
+            <div style="font-size:2rem; color:#6f8eff;"><i class="fas fa-long-arrow-alt-right"></i></div>
+            <div class="tmcp-step"><span class="tmcp-circle">P</span><span>patient subgroup</span></div>
+        </div>
+        <div id="tmcpModels" class="grid-4"></div>
+    </section>
+
+    <!-- PV safety -->
+    <section id="pv" class="section-card">
+        <div class="section-title"><i class="fas fa-shield-alt"></i> Pharmacovigilance AI</div>
+        <p>FAERS / EudraVigilance · EHR · wearables · signal detection (PRR, ROR, BCPNN) · causality prediction · MedDRA coding</p>
+        <div id="pvModels" class="grid-4"></div>
+    </section>
+
+    <!-- Regulatory automation -->
+    <section id="reg" class="section-card">
+        <div class="section-title"><i class="fas fa-file-signature"></i> Regulatory automation (ICH E6/E8/E9, CDISC)</div>
+        <div class="grid-3">
+            <div>📄 protocol / IB / CSR</div>
+            <div>📁 DSUR / eCTD modules</div>
+            <div>⚖️ 21 CFR part 11 ready</div>
+        </div>
+        <div id="regModels" class="grid-4"></div>
+    </section>
+
+    <!-- KPI table -->
+    <section id="kpi" class="section-card">
+        <div class="section-title"><i class="fas fa-chart-bar"></i> key performance indicators</div>
+        <table>
+            <tr><th>scientific</th><td>effect size, hazard ratio, biomarker correlation</td></tr>
+            <tr><th>operational</th><td>enrollment rate, protocol deviations, query rate</td></tr>
+            <tr><th>safety</th><td>AE incidence, SAE rate, DLT frequency</td></tr>
+        </table>
+    </section>
+
+    <!-- pipeline phases / trial types -->
+    <div class="pipeline">
+        <span class="pipe-node">FIH</span> <span class="pipe-node">Phase 1 SAD/MAD</span> <span class="pipe-node">Phase 2a/b</span> <span class="pipe-node">Phase 3</span> <span class="pipe-node">Phase 4/RWE</span>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin:30px 0;">
+        <span class="badge">adaptive</span><span class="badge">basket/umbrella</span><span class="badge">platform</span><span class="badge">TQT</span><span class="badge">DDI</span><span class="badge">pragmatic</span><span class="badge">decentralized</span>
+    </div>
+
+    <!-- advanced modules + BioQentix tagline -->
+    <div style="background:#0d1742; border-radius: 60px; padding:2rem; margin: 2rem 0; text-align:center;">
+        <i class="fas fa-crown fa-2x" style="color:#f7c35c;"></i>
+        <h2 style="font-size:2rem;">optional advanced modules</h2>
+        <div class="grid-3" style="margin-top:1.5rem;">
+            <span>✨ digital twin patient simulation</span>
+            <span>✨ synthetic control arms</span>
+            <span>✨ decentralized trials / wearables</span>
+        </div>
+        <p style="margin-top:2rem; background:#1f2c62; padding:0.8rem; border-radius:40px;">🇮🇳 BioQentix AI: generative AI + quantum + predictive · from 90% failure to 10% · 4,000+ targets</p>
+    </div>
+
+    <!-- FOOTER with directors -->
+    <div class="footer">
+        <span><i class="fas fa-copyright"></i> BioQentix AI Private Limited · Oct 2025, Maharashtra · directors: Dharam Prakash Srivastava, Sarvesh Goel</span>
+        <span><i class="fab fa-linkedin"></i> <i class="fab fa-github"></i> <i class="fas fa-envelope"></i></span>
+    </div>
+
+</div>
+
+<!-- dynamic model injector (merged from original, expanded) -->
+<script>
+    function scrollToId(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const models = [
+        // FIH
+        ["HED Calculator","fihModels"],["MABEL Estimator","fihModels"],["Allometric Scaling AI","fihModels"],["BLRM Bayesian Escalation","fihModels"],["PBPK simulator","fihModels"],
+        // Phase1
+        ["SAD Cohort Optimizer","phase1Models"],["MAD Simulator","phase1Models"],["MTD Predictor","phase1Models"],["Population PK Model","phase1Models"],["AE monitoring AI","phase1Models"],
+        // Phase2
+        ["Responder Prediction XGBoost","phase2Models"],["Dose–Response AI","phase2Models"],["Adaptive Randomization RL","phase2Models"],["Biomarker Cutoff AI","phase2Models"],["Futility analysis","phase2Models"],
+        // Phase3
+        ["Enrollment Prediction","phase3Models"],["Dropout Risk AI","phase3Models"],["Interim Power AI","phase3Models"],["DeepSurv Survival","phase3Models"],["Site selection AI","phase3Models"],
+        // Omics
+        ["Genomics SNP AI","omicsModels"],["Proteomics Signature","omicsModels"],["Metabolomics Feature","omicsModels"],["Multi-Omics Autoencoder","omicsModels"],
+        // TMCP
+        ["Target-Pathway GNN","tmcpModels"],["Mechanism Mapper","tmcpModels"],["Patient Clustering AI","tmcpModels"],["Endpoint Recommender","tmcpModels"],
+        // PV
+        ["PRR Signal Detection","pvModels"],["ROR Bayesian","pvModels"],["MedDRA NLP Coder","pvModels"],["Benefit–Risk Model","pvModels"],["BCPNN","pvModels"],
+        // Regulatory
+        ["Protocol Generator","regModels"],["CSR Auto Writer","regModels"],["eCTD Builder","regModels"],["DSUR AI","regModels"],["IB generator","regModels"]
+    ];
+
+    models.forEach(m => {
+        let div = document.createElement("div");
+        div.className = "info-card";  // reuse style
+        div.style.padding = "1rem 0.8rem";
+        div.innerHTML = `🧠 ${m[0]}`;
+        let container = document.getElementById(m[1]);
+        if (container) container.appendChild(div);
+    });
+
+    // additional small visual: fill empty placeholders if needed (already done)
+</script>
+<!-- ensure all model containers exist (they do) -->
+</body>
+</html>
